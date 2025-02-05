@@ -1,0 +1,99 @@
+{% extends "public/base.html" %}
+{% load static %}
+
+{% block title %}Payments - Airlines{% endblock %}
+
+{% block content %}
+<style>
+    .payment-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: #333;
+    }
+    .payment-container h2 {
+        color: #1E3A8A;
+        margin-bottom: 15px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 18px;
+        color: white;
+        background: #1E40AF;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+    .btn:hover {
+        background: #2563EB;
+    }
+</style>
+
+<div class="payment-container">
+    <h2>Payment Information</h2>
+    <form id="paymentForm" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="cardholder-name">Cardholder Name</label>
+            <input type="text" id="cardholder-name" name="cardholder-name" placeholder="Enter cardholder name" required>
+        </div>
+        <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="number" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="16" pattern="\d{16}" required>
+        </div>
+        <div class="form-group">
+            <label for="card-expiry">Expiry Date</label>
+            <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/YY" maxlength="5" pattern="(0[1-9]|1[0-2])\/\d{2}" required>
+        </div>
+        
+        <button type="submit" class="btn">Pay Now</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("card-number").addEventListener("input", function (event) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 16);
+    });
+
+    document.getElementById("card-expiry").addEventListener("input", function (event) {
+        let input = this.value.replace(/\D/g, ''); 
+        
+        if (input.length >= 2) {
+            let month = input.slice(0, 2);
+            let year = input.slice(2, 4);
+            
+            if (parseInt(month) > 12) {
+                month = "12"; 
+            } else if (parseInt(month) === 0) {
+                month = "01"; 
+            }
+
+            this.value = month + (year ? '/' + year : '');
+        } else {
+            this.value = input;
+        }
+    });
+</script>
+
+{% endblock %}

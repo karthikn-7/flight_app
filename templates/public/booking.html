@@ -1,0 +1,108 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmation - Airlines{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: url("{% static 'images/flight.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .booking-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: #333;
+    }
+
+    .booking-container h2 {
+        color: #1E3A8A;
+        margin-bottom: 15px;
+    }
+
+    .booking-container p {
+        font-size: 18px;
+        color: #444;
+        margin: 5px 0;
+    }
+
+    .ref-number {
+        font-size: 22px;
+        font-weight: bold;
+        color: #DC2626;
+        margin-top: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 18px;
+        color: white;
+        background: #1E40AF;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .btn:hover {
+        background: #2563EB;
+    }
+
+    .error-container {
+        margin-top: 50px;
+    }
+
+    .error-container h3 {
+        font-size: 24px;
+        color: red;
+    }
+</style>
+
+<div class="booking-container">
+    {% if message %}
+        <h2>Booking Confirmed! ✅</h2>
+        <p>Your flight has been successfully booked.</p>
+        <p class="ref-number">Reference No: {{ booking_reference }}</p>
+        <a class="btn" href="{% url 'home' %}">Go to Home</a>
+
+    {% elif flight %}
+        <h2>Confirm Your Booking</h2>
+        <p><strong>Full Name:</strong> {{ flight.fullname }}</p>
+        <p><strong>Flight:</strong> {{ flight.airline }} - {{ flight.flight_number }}</p>
+        <p><strong>Departure:</strong> {{ flight.departure }} → {{ flight.destination }}</p>
+        <p><strong>Departure Date:</strong> {{ flight.departure_date }}</p>
+        <p><strong>Class:</strong> {{ flight.class_type }}</p>
+        {% if amount %}
+        <p><strong>Amount:</strong> {{ amount }}</p>
+        {% endif %}
+
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn">Confirm Booking</button>
+        </form>
+
+    {% else %}
+        <div class="error-container">
+            <h3>404 Not Found!</h3>
+            <p>Oops! The flight you are looking for does not exist.</p>
+            <a class="btn" href="{% url 'home' %}">Go to Home</a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

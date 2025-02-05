@@ -1,0 +1,157 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Reschedule or Cancel Your Flight - Airlines{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: url("{% static 'images/flight.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        font-size: 28px;
+        margin: 20px 0;
+        font-weight: bold;
+        color: black;
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .form-box {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        width: 350px;
+        text-align: center;
+    }
+
+    .form-box h2 {
+        color: #1E3A8A;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .btn-reschedule {
+        background: #1E40AF;
+    }
+
+    .btn-reschedule:hover {
+        background: #2563EB;
+    }
+
+    .btn-cancel {
+        background: #B91C1C;
+    }
+
+    .btn-cancel:hover {
+        background: #DC2626;
+    }
+    label{
+        color:black;
+    }
+
+
+    {% comment %} Error message {% endcomment %}
+    .messages {
+        text-align: center;
+        margin: 15px auto;
+        width: 80%;
+    }
+    .success {
+        color: green;
+        font-weight: bold;
+    }
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<h1 class="header">Manage Your Booking</h1>
+
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="form-container">
+    
+    <div class="form-box">
+        <h2>Reschedule Your Flight</h2>
+        <form method="POST" id="rescheduleForm" action="{% url 'reschedule_flight' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="booking-reference">Booking Reference:</label>
+                <input type="text" id="booking-reference" name="booking_reference" required>
+            </div>
+            <div class="form-group">
+                <label for="new-date">New Departure Date:</label>
+                <input type="date" id="new-date" name="new_date" min="{{ min_departure_date }}" required>
+            </div>
+            <button type="submit" class="btn btn-reschedule">Reschedule Flight</button>
+        </form>
+    </div>
+
+    
+    <div class="form-box">
+        <h2>Cancel Your Flight</h2>
+        <form method="POST" id="cancelForm" action="{% url 'cancel_flight' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="booking-reference-cancel">Booking Reference:</label>
+                <input type="text" id="booking-reference-cancel" name="booking_reference" required>
+            </div>
+            <button type="submit" class="btn btn-cancel">Cancel Flight</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

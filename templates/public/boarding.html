@@ -1,0 +1,73 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Boarding Pass - Airlines{% endblock %}
+
+{% block content %}
+<style>
+    .boarding-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: #333;
+    }
+    .boarding-container h2 {
+        color: #B91C1C;
+        margin-bottom: 15px;
+    }
+    .boarding-container p {
+        font-size: 18px;
+        margin: 5px 0;
+    }
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 18px;
+        color: white;
+        background: #B91C1C;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+    .btn:hover {
+        background: #DC2626;
+    }
+</style>
+
+{% if bookings %}
+{% for boarding in bookings %}
+<div class="boarding-container">
+    <h2>Your Boarding Pass</h2>
+
+        
+    <p><strong>Name:</strong> {{ boarding.flight.fullname }}</p>
+    <p><strong>Age:</strong> {{ boarding.flight.age }}</p>
+    <p><strong>Reference Number:</strong> {{ boarding.flight.id }}</p>
+    <p><strong>Airline:</strong> {{ boarding.flight.airline }}</p>
+    <p><strong>Flight Number:</strong> {{ boarding.flight.flight_number }}</p>
+    <p><strong>Departure:</strong> {{ boarding.flight.departure }} → {{ boarding.flight.destination }}</p>
+    <p><strong>Departure Date:</strong> {{ boarding.flight.departure_date }}</p>
+    <p><strong>Seat Number:</strong> {{ boarding.seat_number }}</p>
+    <p><strong>Boarding Time:</strong> {{ boarding.boarding_time }}</p>
+    
+
+    <button class="btn" onclick="window.print()">Print Boarding Pass</button>
+
+</div>
+{% endfor %}
+
+{% else %}
+<div class="boarding-container">
+    <p>{{ message }}</p>
+</div>
+
+{% endif %}
+
+{% endblock %}

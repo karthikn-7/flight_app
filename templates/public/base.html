@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Airlines{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            width:100%;
+            height:100%;
+            background-image:url("{% static 'images/flight.jpg' %}");
+            background-repeat:repeat-y;
+            }
+        
+        </style>
+</head>
+<body>
+
+    <nav>
+        <ul style="display:flex;justify-content:space-between">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'user_home' %}">Book Flight</a></li>
+                <li><a href="{% url 'reschedules' %}">Reschedule/Cancel</a></li>
+                <li><a href="{% url 'boardings' %}">Boarding Pass</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login / Signup</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Content Block -->
+
+        {% block content %}
+
+        {% endblock %}
+
+
+</body>
+</html>
