@@ -15,9 +15,10 @@ def boardingPass_view(request):
     
     if not bookings.exists():
         return render(request,'public/boarding.html',{"message":"No Bookings Found!"})
-
+        
     return render(request,'public/boarding.html',{
-        "bookings":bookings
+        "bookings":bookings,
+        "seat_number":random.randint(1, 50),
     })
 
 @login_required(login_url='login')
@@ -46,7 +47,8 @@ def confirm_booking(request):
         if not flight_data:
             return redirect('user_home')
         
-        
+        from datetime import time
+        boarding_time = time(random.randint(0,23),random.randint(0,59))
         flight = Flight.objects.create(
             fullname = flight_data['fullname'],
             age = flight_data['age'],
@@ -57,7 +59,8 @@ def confirm_booking(request):
             destination=flight_data["destination"],
             departure_date=flight_data["departure_date"],
             return_date=flight_data["return_date"],
-            class_type=flight_data["class_type"]
+            class_type=flight_data["class_type"],
+            boarding_time=boarding_time
         )
         
         booking = Booking.objects.create(user=request.user, flight=flight)

@@ -23,9 +23,11 @@ class Flight(models.Model):
     destination = models.CharField(max_length=100)
     
     # Date infos
+    boarding_time = models.TimeField(verbose_name="Boarding Time",null=True,blank=True)
     departure_date = models.DateField(null=False, verbose_name="Departure Date")
     return_date = models.DateField(null=True, blank=True, verbose_name="Return Date")
     class_type = models.CharField(max_length=20,null=True,verbose_name="Class")
+    
     
     
     def __str__(self):

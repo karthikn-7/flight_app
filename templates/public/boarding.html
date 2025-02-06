@@ -54,8 +54,8 @@
     <p><strong>Flight Number:</strong> {{ boarding.flight.flight_number }}</p>
     <p><strong>Departure:</strong> {{ boarding.flight.departure }} → {{ boarding.flight.destination }}</p>
     <p><strong>Departure Date:</strong> {{ boarding.flight.departure_date }}</p>
-    <p><strong>Seat Number:</strong> {{ boarding.seat_number }}</p>
-    <p><strong>Boarding Time:</strong> {{ boarding.boarding_time }}</p>
+    <p><strong>Seat Number:</strong> {{ seat_number }}</p>
+    <p><strong>Boarding Time:</strong> {{ boarding.flight.boarding_time }}</p>
     
 
     <button class="btn" onclick="window.print()">Print Boarding Pass</button>
