@@ -70,7 +70,7 @@
             let loginForm = document.getElementById("login-form");
             let signupForm = document.getElementById("signup-form");
             
-            let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/; // Correct regex
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     
             function validateEmail(input) {
                 if (!emailPattern.test(input.value)) {
@@ -82,7 +82,7 @@
                 }
             }
     
-            // Live validation for both email inputs
+            
             loginEmail.addEventListener("input", function () {
                 validateEmail(loginEmail);
             });
@@ -90,8 +90,8 @@
             signupEmail.addEventListener("input", function () {
                 validateEmail(signupEmail);
             });
-    
-            // Prevent invalid form submission
+
+            
             loginForm.addEventListener("submit", function (event) {
                 if (!validateEmail(loginEmail)) {
                     event.preventDefault();
