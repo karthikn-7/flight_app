@@ -51,6 +51,7 @@
 
     <script>
         function toggleForm(formId) {
+            
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
 
@@ -61,7 +62,52 @@
                 loginForm.style.display = 'none';
                 signupForm.style.display = 'block';
             }
-        }
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let loginEmail = document.querySelector("#login-form input[name='email']");
+            let signupEmail = document.querySelector("#signup-form input[name='email']");
+            let loginForm = document.getElementById("login-form");
+            let signupForm = document.getElementById("signup-form");
+            
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/; // Correct regex
+    
+            function validateEmail(input) {
+                if (!emailPattern.test(input.value)) {
+                    input.style.border = "2px solid red";
+                    return false;
+                } else {
+                    input.style.border = "2px solid green";
+                    return true;
+                }
+            }
+    
+            // Live validation for both email inputs
+            loginEmail.addEventListener("input", function () {
+                validateEmail(loginEmail);
+            });
+    
+            signupEmail.addEventListener("input", function () {
+                validateEmail(signupEmail);
+            });
+    
+            // Prevent invalid form submission
+            loginForm.addEventListener("submit", function (event) {
+                if (!validateEmail(loginEmail)) {
+                    event.preventDefault();
+                    alert("Please enter a valid Gmail address (e.g., example@gmail.com).");
+                }
+            });
+    
+            signupForm.addEventListener("submit", function (event) {
+                if (!validateEmail(signupEmail)) {
+                    event.preventDefault();
+                    alert("Please enter a valid Gmail address (e.g., example@gmail.com).");
+                }
+            });
+        });
+
+        
     </script>
     
 {% endblock %}
