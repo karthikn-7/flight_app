@@ -26,13 +26,13 @@
                 <li><a href="{% url 'user_home' %}">Book Flight</a></li>
                 <li><a href="{% url 'reschedules' %}">Reschedule/Cancel</a></li>
                 <li><a href="{% url 'boardings' %}">Boarding Pass</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to log out?');">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login / Signup</a></li>
             {% endif %}
         </ul>
     </nav>
-
+    
     <!-- Content Block -->
 
         {% block content %}

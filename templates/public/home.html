@@ -21,7 +21,7 @@
         <ul style="display:flex;justify-content:space-between">
             <li><a href="{% url 'aboutUs' %}">About Us</a></li>
             {% if  user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to log out?');">Logout</a></li>
             {% endif %}
         </ul>
     </nav>
